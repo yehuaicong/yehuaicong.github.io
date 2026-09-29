@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Ye HuaiCong">
+
+
+
+
+
+<title>我对等保2.0的理解 | Hexo</title>
+
+
+
+    <link rel="icon" href="/%5Cdaomei-bear.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const pagebody = document.getElementsByTagName('body')[0]
+
+            function setTheme(status) {
+
+                if (status === 'dark') {
+                    window.sessionStorage.theme = 'dark'
+                    pagebody.classList.add('dark-theme');
+
+                } else if (status === 'light') {
+                    window.sessionStorage.theme = 'light'
+                    pagebody.classList.remove('dark-theme');
+                }
+            };
+
+            setTheme(window.sessionStorage.theme)
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YHC&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                <a class="menu-item" href="/archives">Posts</a>
+                
+                <a class="menu-item" href="/category">Categories</a>
+                
+                <a class="menu-item" href="/tag">Tags</a>
+                
+                <a class="menu-item" href="/about">About</a>
+                
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YHC&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">
+                    <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M4.5 17.27q-.213 0-.356-.145T4 16.768t.144-.356t.356-.143h15q.213 0 .356.144q.144.144.144.357t-.144.356t-.356.143zm0-4.77q-.213 0-.356-.144T4 11.999t.144-.356t.356-.143h15q.213 0 .356.144t.144.357t-.144.356t-.356.143zm0-4.77q-.213 0-.356-.143Q4 7.443 4 7.23t.144-.356t.356-.143h15q.213 0 .356.144T20 7.23t-.144.356t-.356.144z"/></svg>
+                    <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Material Symbols Light by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="m12 12.708l-5.246 5.246q-.14.14-.344.15t-.364-.15t-.16-.354t.16-.354L11.292 12L6.046 6.754q-.14-.14-.15-.344t.15-.364t.354-.16t.354.16L12 11.292l5.246-5.246q.14-.14.345-.15q.203-.01.363.15t.16.354t-.16.354L12.708 12l5.246 5.246q.14.14.15.345q.01.203-.15.363t-.354.16t-.354-.16z"/></svg>
+                </div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                <a class="menu-item" href="/archives">Posts</a>
+                
+                <a class="menu-item" href="/category">Categories</a>
+                
+                <a class="menu-item" href="/tag">Tags</a>
+                
+                <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">我对等保2.0的理解</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Ye HuaiCong</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 29, 2026&nbsp;&nbsp;22:20:00</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="一、等保是什么"><a href="#一、等保是什么" class="headerlink" title="一、等保是什么"></a>一、等保是什么</h2><p>等保全称是”网络安全等级保护”，是我国网络安全领域的基础性制度。它的核心逻辑是：<strong>网络系统的安全保护程度，应当与它承载的业务重要程度相匹配</strong>。</p>
+<p>我国《网络安全法》第二十一条明确要求”国家实行网络安全等级保护制度”，这意味着等保不是一个可选的加分项，而是法律规定的底线义务。等级保护制度由”定级、备案、建设整改、等级测评、监督检查”五个环节构成闭环，是一个持续运行的过程，而不是一次性的验收动作。</p>
+<h2 id="二、1-0到2-0：从”能打通”到”可信可管”"><a href="#二、1-0到2-0：从”能打通”到”可信可管”" class="headerlink" title="二、1.0到2.0：从”能打通”到”可信可管”"></a>二、1.0到2.0：从”能打通”到”可信可管”</h2><p>我理解等保2.0相比1.0，最本质的变化有三条：</p>
+<p><strong>第一，安全目标从”信息保密”转向”全局可信”。</strong> 等保1.0诞生于2007年前后，时代背景是互联网早期，主要威胁是信息泄露、病毒入侵，防护逻辑集中在边界，强调的是”网络不能被攻破”。等保2.0（GB&#x2F;T 22239-2019）把安全目标明确为”<strong>安全保护等级的对象受到破坏时，所侵害的客体、对客体造成的侵害程度</strong>“三个维度，并首次将”<strong>通信完整性和数据保密性、可用性</strong>“作为基础目标，同时强调<strong>可信计算</strong>的概念。</p>
+<p><strong>第二，从单一维度走向”整体性”保护。</strong> 1.0基本是围绕网络和系统设备；2.0把保护对象扩展为”<strong>有权限管理要求的网络与信息安全相关系统</strong>“，覆盖范围从传统信息系统扩展到了云计算、移动互联、物联网、工业控制系统。2.0特别强调”<strong>分区分域</strong>“思想——不再以设备为边界，而是以业务功能和数据流向为边界来划分安全区域，这套思想一直延续到今天的”关保对象”保护。</p>
+<p><strong>第三，从技术要求扩展到”技术+管理”双轮。</strong> 2.0的安全通用要求里，管理要求部分占到了五个章节（管理制度、管理机构、人员安全管理、系统建设管理、系统运维管理），与四个技术章节（安全物理环境、安全通信网络、安全区域边界、安全计算环境）平级。很多人一开始觉得管理要求是”凑数”，但实践下来，真正拖垮系统的往往不是技术漏洞，而是运维流程混乱、账号权限失控、日志无人审计。</p>
+<h2 id="三、核心框架：一个中心、三重防护"><a href="#三、核心框架：一个中心、三重防护" class="headerlink" title="三、核心框架：一个中心、三重防护"></a>三、核心框架：一个中心、三重防护</h2><p>等保2.0的技术要求可以用”<strong>一个中心，三重防护</strong>“来概括，这也是它最经典的结构：</p>
+<ul>
+<li><strong>安全管理中心</strong>：负责系统的管理、运维、审计，是整个体系的”大脑”；</li>
+<li><strong>安全计算环境</strong>：服务器、终端、数据库、应用自身的安全防护，是”内层”；</li>
+<li><strong>安全区域边界</strong>：区域之间的访问控制与边界防护，是”连接层”；</li>
+<li><strong>安全通信网络</strong>：传输过程中的完整性与保密性，是”通道层”。</li>
+</ul>
+<p>我理解这个框架的妙处在于，它把一个庞大系统拆成了”点（计算环境）、线（通信网络）、面（区域边界）、中心（管理）”四个可独立建设、独立测评、独立整改的维度。测评时也是按这个逻辑逐项打分，这让等保落地具备了可操作性——不会出现”整个系统一锅端”式的高难度整改。</p>
+<h2 id="四、五级安全保护能力"><a href="#四、五级安全保护能力" class="headerlink" title="四、五级安全保护能力"></a>四、五级安全保护能力</h2><p>等保把安全保护能力从低到高分为五级：</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>名称</th>
+<th>大致定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一级</td>
+<td>用户受到侵害到什么程度</td>
+<td>自主保护级</td>
+</tr>
+<tr>
+<td>二级</td>
+<td>系统遭到破坏，对公民、法人和其他组织的合法权益造成严重损害</td>
+<td>指导保护级</td>
+</tr>
+<tr>
+<td>三级</td>
+<td>遭到严重破坏，对社会秩序和公共利益造成严重损害</td>
+<td>监督保护级</td>
+</tr>
+<tr>
+<td>四级</td>
+<td>遭到特别严重破坏，对社会秩序、公共利益造成重大损害</td>
+<td>强制保护级</td>
+</tr>
+<tr>
+<td>五级</td>
+<td>遭到特别严重破坏，对国家安全造成特别严重损害</td>
+<td>专控保护级</td>
+</tr>
+</tbody></table>
+<p>在实践中，三级是绝大多数重要业务系统的门槛，也是被踩坑最多的级别——因为<strong>三级系统需要每年测评一次</strong>，且对日志留存、审计跟踪、备份恢复的要求显著高于二级。</p>
+<h2 id="五、定级要避免的两个误区"><a href="#五、定级要避免的两个误区" class="headerlink" title="五、定级要避免的两个误区"></a>五、定级要避免的两个误区</h2><p>结合我接触的情况，实操中最容易出问题的是<strong>定级不准</strong>。</p>
+<p>一个常见的错误是”<strong>就高不就低</strong>“的焦虑。定级高了，测评成本和整改投入成倍增加，很多单位承受不起，于是选择了”卡二不卡三”。另一个常见错误是<strong>跟着主管单位的通知定级</strong>，定级报告写完了才去发现业务实际上是三级（比如承载了几十万人的个人信息处理）。定级应该以”<strong>业务影响对象 + 侵害程度</strong>“为核心依据，而不是以行政压力或建设预算为依据。</p>
+<p>另一个容易忽略的点是：<strong>定级对象不是”一个系统”，而应该是”一个系统的一个特定边界”</strong>。一个系统里如果承载了不同等级的业务，正确的做法是拆分出多个定级对象，而不是笼统地整体定一个级。这也是”分区分域”思想在定级环节的落地。</p>
+<h2 id="六、等保的价值：它是一个安全工程化的框架"><a href="#六、等保的价值：它是一个安全工程化的框架" class="headerlink" title="六、等保的价值：它是一个安全工程化的框架"></a>六、等保的价值：它是一个安全工程化的框架</h2><p>很多人把等保当成”应付检查”，这是对它的误读。我认为等保2.0真正的价值在于，它把”安全”这个高度抽象的概念，<strong>变成了一套可度量、可交付、可验收的工程语言</strong>：</p>
+<ul>
+<li>它用一句话说清楚了安全建设的<strong>优先级</strong>——不是把预算平均撒在所有安全产品上，而是先保护最重要的系统；</li>
+<li>它用结构化的要求，<strong>填补了安全建设中最容易被忽视的短板</strong>——分区隔离、访问控制、集中审计、备份恢复；</li>
+<li>它给了安全团队一个<strong>对老板说话的抓手</strong>——当你说”存在高风险”时，”三级系统有 XX 项不符合项”显然比”我觉得不安全”更有说服力。</li>
+</ul>
+<h2 id="七、我的几点体会"><a href="#七、我的几点体会" class="headerlink" title="七、我的几点体会"></a>七、我的几点体会</h2><ol>
+<li><p><strong>等保是底线，不是天花板。</strong> 过了等保三级不代表就安全了。等保解决的是”基本合规”问题，挡不住APT攻击、供应链投毒、0day漏洞。真正要投入资源的方向，应在等保框架之外做延伸。</p>
+</li>
+<li><p><strong>技术与管理要同步建设。</strong> 等保把管理要求写进标准，是一次务实的纠偏。等级保护做得好的单位，几乎无一例外都是管理流程清晰、人员职责明确的；反过来，只买了产品没建立流程的，即使测评通过，实际风险依然很高。</p>
+</li>
+<li><p><strong>从”做项目”转向”做运营”。</strong> 一次性的建设（制度建设、设备采购）能拿分，但持续性的运营（漏洞跟踪、日志分析、应急演练、配置核查）才是等保能长期成立的前提。这一点上，等保2.0提出的”<strong>监测预警、应急处置、事件溯源、灾难恢复</strong>“四大能力，值得被当作常态化机制来落实。</p>
+</li>
+<li><p><strong>把等保作为安全的”底座”而非”终点”。</strong> 一个好的实践路径是：以等保框架为基础建立安全基线，在此之上叠加数据安全、供应链安全、业务风控等专项能力，形成完整的安全体系。</p>
+</li>
+</ol>
+<hr>
+<p><strong>总结一句话：</strong> 等保2.0的本质，是用国家标准的权威性，把”网络安全”从各自为战的技术堆砌，拉回到”分区分域、整体防护、分级管理、责任明确”的体系化轨道上来。它未必能挡住所有的攻击，但能保证一个系统不会因为低级错误而沦陷——而这恰恰是绝大多数安全事件真正的成因。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Ye HuaiCong</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://yehuaicong.github.io/2026/09/29/%E7%AD%89%E4%BF%9D2.0%E7%90%86%E8%A7%A3/">https://yehuaicong.github.io/2026/09/29/%E7%AD%89%E4%BF%9D2.0%E7%90%86%E8%A7%A3/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/"># 信息安全</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Ye HuaiCong | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
